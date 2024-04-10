@@ -1,29 +1,60 @@
-import React from 'react';
-// import logo from './logo.svg';
-import { Link, Outlet } from 'react-router-dom';
-import styles from './App.module.scss';
+import React from "react";
+import { Link as RouterLink, Outlet } from "react-router-dom";
+import styles from "./App.module.scss";
+import { AppBar, CssBaseline, Link, ThemeProvider, Toolbar, Typography, createTheme } from "@mui/material";
+import { LiveTvOutlined } from "@mui/icons-material";
+import { teal } from "@mui/material/colors";
+
+function HeaderLink({
+  children,
+  to,
+}: {
+  to: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      component={RouterLink}
+      to={to}
+      variant="button"
+      color="inherit"
+      sx={{ my: 1, mx: 1.5 }}
+    >
+      {children}
+    </Link>
+  );
+}
+
+const defaultTheme = createTheme({
+  palette: {
+    primary: teal,
+    secondary: {
+      main: "#96000f"
+    }
+  }
+})
 
 function App() {
   return (
-    <div className={styles.root}>
-      <header className={styles.header}>
-        <img src='/cinema-ico.png' className={styles.logo} alt="logo" />
-        <ul>
-          <li>
-            <Link className={styles.link} to='/'>Home</Link>
-          </li>
-          <li>
-            <Link className={styles.link} to='/about'>About</Link>
-          </li>
-          <li>
-            <Link className={styles.link} to='/movies'>Movies</Link>
-          </li>
-        </ul>
-      </header>
+    <ThemeProvider theme={defaultTheme} >
+      <CssBaseline />
+      <AppBar>
+        <Toolbar>
+          <LiveTvOutlined sx={{ mr: 2 }} />
+          <Typography variant="h6" color="inherit" noWrap>
+            The Movies DB
+          </Typography>
+          <nav>
+            <HeaderLink to="/">Home</HeaderLink>
+            <HeaderLink to="/movies">Movies</HeaderLink>
+            <HeaderLink to="/about">About</HeaderLink>        
+          </nav>
+        </Toolbar>
+      </AppBar>
       <main className={styles.main}>
-      <Outlet/>
-      </main>      
-    </div>
+        <Outlet />
+      </main>
+    </ThemeProvider>
   );
 }
 

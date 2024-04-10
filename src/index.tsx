@@ -8,15 +8,31 @@ import { About } from './features/About/About';
 import  Movies from './features/Movies/Movies';
 import { Provider } from 'react-redux';
 import store from './store';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import Home from './features/Home/Home';
+
+function AppEntrypoint() {
+  return (
+   <Provider store={store}>
+      <App />
+    </Provider> 
+  )
+};
+
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element:(<Provider store={store}>
-      <App />
-    </Provider>),
+    element:<AppEntrypoint/>,
     children: [
+      {
+        path: "/",
+        element: <Home/>,
+      },
      {
         path: "/movies",
         element: <Movies/>,
